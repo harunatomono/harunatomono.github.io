@@ -105,11 +105,14 @@ export const siteContent = {
     about: {
         paragraphs: [
             [
-                { text: 'I am a computational biologist dedicated to analyzing cancer-related genome data. I graduated from ' },
+                { text: 'This website is under construction!!!' }
+            ],
+            [
+                { text: 'I am an associate computational biologist analyzing cancer-related genome data. I graduated from ' },
                 { text: 'Caltech', highlight: true, href: 'https://www.caltech.edu' },
                 { text: ' with a BS in Bioengineering and a Minor in Neurobiology, and am currently conducting research at the ' },
                 { text: 'Broad Institute', highlight: true, href: 'https://www.broadinstitute.org' },
-                { text: '.' },
+                { text: ' with Drs. Rameen Beroukhim and Matthew Meyerson.' },
             ],
             [
                 { text: 'My work focuses on computational biology methods development, biological data visualization, and multi-omics. With extensive experience in MS-based proteomics, data analysis, and mammalian cell culture, I strive to build stronger wet and dry lab collaborations for data-driven biological research.' },
@@ -123,18 +126,18 @@ export const siteContent = {
         {
             date: 'Jan 2026',
             contentSegments: [
-                { text: 'Excited to share our latest work on sevabertinib, a reversible HER2 inhibitor, published in ' },
+                { text: 'Excited to share our latest work on sevabertinib, a reversible HER2 inhibitor for non-small cell lung cancer, published in ' },
                 { text: 'Cancer Discovery', href: 'https://doi.org/10.1158/2159-8290.CD-25-0605' },
                 { text: '.' },
             ],
         },
         {
-            date: 'Jun 2024',
-            content: 'Joined the Broad Institute of MIT and Harvard as a Computational Associate in the Greulich Lab.',
+            date: 'Aug 2024',
+            content: 'Moved to Cambridge, MA and joined the Broad Institute of MIT and Harvard as a Computational Associate in the Beroukhim and Meyerson Labs.',
         },
         {
-            date: 'May 2024',
-            content: 'Graduated from Caltech with a B.S. in Bioengineering and a Minor in Neurobiology.',
+            date: 'June 2024',
+            content: 'Graduated from Caltech with a B.S. in Bioengineering and a Minor in Neurobiology!',
         },
         {
             date: 'Jan 2024',
