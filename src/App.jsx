@@ -149,17 +149,16 @@ const customStyles = `
     100% { transform: translateY(60vh) rotate(180deg); }
   }
 
-  .star-fill-morph {
+  .star-fill-sync {
     fill: currentColor;
     stroke: currentColor;
     stroke-width: 2.5;
     stroke-linejoin: round;
-    animation: morphFill ${formatSeconds(1.1)} step-end forwards;
+    animation: starUnfillAtBounce 1ms linear ${formatSeconds(0.95)} forwards;
   }
 
-  @keyframes morphFill {
+  @keyframes starUnfillAtBounce {
     0% { fill: currentColor; stroke: currentColor; }
-    50% { fill: none; stroke: currentColor; }
     100% { fill: none; stroke: currentColor; }
   }
 
@@ -449,7 +448,7 @@ const Loader = ({ phase }) => {
 
           <div className="star-shoot-x absolute w-full flex justify-center z-50 pointer-events-none" style={{ animationDelay: formatSeconds(0.4) }}>
             <div className="star-shoot-y" style={{ animationDelay: formatSeconds(0.4) }}>
-              <svg viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="w-12 h-12 md:w-20 md:h-20 text-current star-fill-morph">
+              <svg viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="w-12 h-12 md:w-20 md:h-20 text-current star-fill-sync">
                 <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
               </svg>
             </div>
