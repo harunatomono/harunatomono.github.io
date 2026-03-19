@@ -3,6 +3,13 @@ import { Fragment, useEffect, useState } from 'react';
 import { siteContent } from './content/siteContent';
 
 const ANIMATION_SPEED = 1.25;
+const STAR_TUMBLE_DELAY = 0.65;
+const STAR_TUMBLE_DURATION = 0.8;
+const STAR_FIRST_BOUNCE_PROGRESS = 0.6;
+const FIRST_NAME_REVEAL_DELAY = STAR_TUMBLE_DELAY + STAR_TUMBLE_DURATION * STAR_FIRST_BOUNCE_PROGRESS;
+const FIRST_NAME_LETTER_STAGGER = 0.03;
+const POST_FRAME_PAUSE = 0.25;
+const HOME_REVEAL_DELAY_OFFSET = POST_FRAME_PAUSE;
 
 const formatSeconds = (value) => `${Number((value / ANIMATION_SPEED).toFixed(3))}s`;
 
@@ -189,6 +196,38 @@ const customStyles = `
     100% { opacity: 1; transform: translateY(0); }
   }
 
+  .first-name-char-from-last {
+    opacity: 0;
+    display: inline-block;
+    transform-origin: right center;
+    animation: firstNameCharFromLast ${formatSeconds(0.36)} forwards;
+  }
+
+  @keyframes firstNameCharFromLast {
+    0% {
+      opacity: 0;
+      transform: translateX(var(--from-x, 1.4em)) translateY(0.12em) rotate(-12deg) scale(0.9);
+      animation-timing-function: cubic-bezier(0.2, 0.95, 0.35, 1);
+    }
+    40% {
+      opacity: 1;
+      transform: translateX(0.08em) translateY(-0.05em) rotate(4.5deg) scale(1.03);
+      animation-timing-function: cubic-bezier(0.22, 0.06, 0.25, 1);
+    }
+    60% {
+      transform: translateX(0.22em) translateY(0.03em) rotate(2deg) scale(1.01);
+      animation-timing-function: cubic-bezier(0.18, 0.85, 0.3, 1);
+    }
+    80% {
+      transform: translateX(-0.05em) translateY(-0.02em) rotate(-2.2deg) scale(0.995);
+      animation-timing-function: ease-out;
+    }
+    100% {
+      opacity: 1;
+      transform: translateX(0) translateY(0) rotate(0deg) scale(1);
+    }
+  }
+
   .fade-in-up {
     opacity: 0;
     transform: translateY(20px);
@@ -227,18 +266,43 @@ const customStyles = `
   .news-timeline-item {
     position: relative;
     padding-left: 1.5rem;
-    border-left: 1px solid var(--news-line);
+  }
+
+  .news-timeline-item::after {
+    content: '';
+    position: absolute;
+    left: -1.5px;
+    top: calc(0.5rem + 4px);
+    bottom: 0;
+    width: 2px;
+    background-color: var(--news-line);
+    z-index: 1;
+    transition: background-color ${formatSeconds(0.2)} ease;
   }
 
   .news-timeline-item::before {
     content: '';
     position: absolute;
     left: -4px;
-    top: 0;
+    top: 0.5rem;
+    transform: translateY(-50%);
     width: 7px;
     height: 7px;
     background-color: var(--news-dot);
     border-radius: 50%;
+    z-index: 2;
+  }
+
+  .news-date-label {
+    transition: color ${formatSeconds(0.2)} ease;
+  }
+
+  .news-timeline-item:hover::after {
+    background-color: var(--palette-accent1);
+  }
+
+  .news-timeline-item:hover .news-date-label {
+    color: var(--palette-accent1Dark);
   }
 
   .star-filled-rounded {
@@ -307,6 +371,22 @@ const customStyles = `
     border: 1px solid var(--border-default);
     box-shadow: 0 24px 60px color-mix(in srgb, var(--page-text) 16%, transparent);
   }
+
+  .scroll-down-hint {
+    color: var(--subtle-text);
+    transition: opacity ${formatSeconds(0.2)} ease, transform ${formatSeconds(0.2)} ease, color ${formatSeconds(0.2)} ease;
+    animation: scrollHintBob ${formatSeconds(1.2)} ease-in-out infinite;
+  }
+
+  .scroll-down-hint:hover {
+    color: var(--page-text);
+    opacity: 0.85;
+  }
+
+  @keyframes scrollHintBob {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(6px); }
+  }
 `;
 
 // render formatted text segments
@@ -315,7 +395,7 @@ const renderTextSegments = (segments, classMap = {}) =>
     const className = [
       segment.highlight ? classMap.highlight : '',
       segment.emphasis ? classMap.emphasis : '',
-      segment.italic ? classMap.italic : '',
+      segment.italic ? classMap.italic ?? 'italic' : '',
       segment.className ?? '',
     ]
       .filter(Boolean)
@@ -436,7 +516,7 @@ const Loader = ({ phase }) => {
           className="fixed inset-0 z-[60] flex items-center justify-center overflow-hidden"
           style={{ backgroundColor: 'var(--loader-phase2-bg)', color: 'var(--loader-text)' }}
         >
-          <div className="flex space-x-2 md:space-x-4 text-[25vw] md:text-[30vh] font-serif leading-none pb-8">
+          <div className="flex space-x-2 md:space-x-4 text-[18.75vw] md:text-[22.5vh] font-serif leading-none pb-8">
             {firstNameCharacters.map((char, i) => (
               <span key={i} className="char-bounce-left inline-block" style={{ '--tilt': i % 2 === 0 ? '-2deg' : '2deg', animationDelay: formatSeconds(i * 0.12) }}>
                 <span className={`inline-block ${i === 3 ? 'animate-u-dip' : ''}`}>
@@ -463,9 +543,25 @@ const Loader = ({ phase }) => {
         >
           <div className="text-4xl md:text-6xl tracking-tight font-serif flex items-center gap-3 md:gap-4">
             <div className="relative flex items-baseline">
-              {firstNameCharacters.map((char, i) => (
-                <span key={`first-${i}`} className="char-appear" style={{ animationDelay: formatSeconds(i * 0.05) }}>{char}</span>
-              ))}
+              {firstNameCharacters.map((char, i) => {
+                const distanceFromT = (firstNameCharacters.length - i) * 0.36 + 0.8;
+                const letterDelay =
+                  FIRST_NAME_REVEAL_DELAY +
+                  (firstNameCharacters.length - 1 - i) * FIRST_NAME_LETTER_STAGGER;
+
+                return (
+                  <span
+                    key={`first-${i}`}
+                    className="first-name-char-from-last"
+                    style={{
+                      '--from-x': `${distanceFromT}em`,
+                      animationDelay: formatSeconds(letterDelay),
+                    }}
+                  >
+                    {char}
+                  </span>
+                );
+              })}
             </div>
 
             <div className="relative flex items-baseline">
@@ -473,7 +569,7 @@ const Loader = ({ phase }) => {
                 <span key={`last-${i}`} className="char-appear" style={{ animationDelay: formatSeconds((i + firstNameCharacters.length) * 0.05) }}>{char}</span>
               ))}
               <span className="relative">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="absolute bottom-2 md:bottom-4 left-1 w-6 h-6 md:w-8 md:h-8 text-current star-tumble" style={{ animationDelay: formatSeconds(0.65) }}>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="absolute bottom-2 md:bottom-4 left-1 w-6 h-6 md:w-8 md:h-8 text-current star-tumble" style={{ animationDelay: formatSeconds(STAR_TUMBLE_DELAY) }}>
                   <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
                 </svg>
               </span>
@@ -486,11 +582,11 @@ const Loader = ({ phase }) => {
 };
 
 // render the navigation bar
-const Navbar = ({ onViewChange, onCvOpen, shouldAnimate }) => {
+const Navbar = ({ onViewChange, shouldAnimate }) => {
   return (
     <nav
-      className={getFadeInClassName('flex justify-between items-center py-8 px-6 md:px-12', shouldAnimate)}
-      style={getFadeInStyle(shouldAnimate, 4.1)}
+      className={getFadeInClassName('sticky top-0 z-50 flex justify-between items-center py-8 px-6 md:px-12', shouldAnimate)}
+      style={getFadeInStyle(shouldAnimate, 4.1 + HOME_REVEAL_DELAY_OFFSET)}
     >
       <div
         onClick={() => onViewChange('home')}
@@ -511,7 +607,7 @@ const Navbar = ({ onViewChange, onCvOpen, shouldAnimate }) => {
         >
           {siteContent.navigation.publicationsLabel}
         </button>
-        <button type="button" onClick={onCvOpen} className="interactive-link cursor-pointer border-0 bg-transparent p-0">
+        <button type="button" onClick={() => onViewChange('cv')} className="interactive-link cursor-pointer border-0 bg-transparent p-0">
           {siteContent.navigation.cvLabel}
         </button>
       </div>
@@ -522,28 +618,28 @@ const Navbar = ({ onViewChange, onCvOpen, shouldAnimate }) => {
 // render the hero section
 const Hero = ({ shouldAnimate }) => {
   return (
-    <section className="px-4 md:px-12 pt-8 md:pt-12 pb-24 max-w-6xl mx-auto flex flex-col items-center overflow-x-hidden sm:overflow-visible">
-      <div className="relative w-full mt-12 md:mt-20 grid grid-cols-1 lg:grid-cols-12 gap-y-12 lg:gap-0 items-start">
+    <section className="px-4 md:px-12 py-[clamp(2.5rem,6vh,5.5rem)] max-w-6xl mx-auto flex min-h-[calc(100svh-6.5rem)] md:min-h-[calc(100svh-8rem)] flex-col justify-center items-center overflow-x-hidden sm:overflow-visible">
+      <div className="relative w-full grid grid-cols-1 lg:grid-cols-12 gap-y-[clamp(1.5rem,4vh,3rem)] lg:gap-y-0 items-center">
         <div
           className={getFadeInClassName('lg:col-span-8 lg:col-start-2 z-10', shouldAnimate)}
-          style={getFadeInStyle(shouldAnimate, 4.2)}
+          style={getFadeInStyle(shouldAnimate, 4.2 + HOME_REVEAL_DELAY_OFFSET)}
         >
           <div
-            className="p-6 md:p-10 relative w-full font-serif"
+            className="relative w-full lg:w-[min(100%,clamp(20rem,56vw,46rem))] p-[clamp(1.1rem,2.4vw,2.4rem)] font-serif"
             style={{
               transform: 'rotate(-2deg)',
               backgroundColor: 'var(--note-featured-bg)',
               color: 'var(--note-featured-text)',
             }}
           >
-            <h1 className="text-2xl md:text-3xl lg:text-4xl font-normal leading-tight md:leading-tight tracking-tight">
+            <h1 className="text-[clamp(1.35rem,2.8vw,2.25rem)] font-normal leading-[1.2] tracking-tight">
               {renderTextSegments(siteContent.hero.headline, {
                 emphasis: 'italic',
                 italic: 'italic',
               })}
             </h1>
             <div className="absolute -right-4 -top-4 md:-right-5 md:-top-5 z-40">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className={`w-10 h-10 md:w-12 md:h-12 text-current ${shouldAnimate ? 'star-land' : ''}`} style={shouldAnimate ? { animationDelay: formatSeconds(4.1) } : undefined}>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className={`w-10 h-10 md:w-12 md:h-12 text-current ${shouldAnimate ? 'star-land' : ''}`} style={shouldAnimate ? { animationDelay: formatSeconds(4.1 + HOME_REVEAL_DELAY_OFFSET) } : undefined}>
                 <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
               </svg>
             </div>
@@ -551,22 +647,22 @@ const Hero = ({ shouldAnimate }) => {
         </div>
 
         <div
-          className={getFadeInClassName('lg:col-span-5 lg:col-start-7 lg:-mt-5 z-20 flex justify-end', shouldAnimate)}
-          style={getFadeInStyle(shouldAnimate, 4.3)}
+          className={getFadeInClassName('lg:col-span-5 lg:col-start-7 lg:-mt-5 z-20 flex justify-center lg:justify-end', shouldAnimate)}
+          style={getFadeInStyle(shouldAnimate, 4.3 + HOME_REVEAL_DELAY_OFFSET)}
         >
-          <div className="folded-note p-5 md:p-8 relative w-full font-mono" style={{ transform: 'rotate(5deg)', color: 'var(--note-folded-text)' }}>
-            <p className="text-sm md:text-base leading-relaxed">
+          <div className="folded-note relative w-[min(100%,clamp(16rem,42vw,30rem))] p-[clamp(0.95rem,2.1vw,2rem)] font-mono" style={{ transform: 'rotate(5deg)', color: 'var(--note-folded-text)' }}>
+            <p className="text-[clamp(0.78rem,1.1vw,1rem)] leading-relaxed">
               {siteContent.hero.stickyNote}
             </p>
           </div>
         </div>
 
         <div
-          className={getFadeInClassName('lg:col-span-3 lg:col-start-3 lg:-mt-10 lg:ml-6 z-30 flex justify-start', shouldAnimate)}
-          style={getFadeInStyle(shouldAnimate, 4.4)}
+          className={getFadeInClassName('lg:col-span-3 lg:col-start-3 lg:-mt-10 lg:ml-6 z-30 flex justify-center lg:justify-start', shouldAnimate)}
+          style={getFadeInStyle(shouldAnimate, 4.4 + HOME_REVEAL_DELAY_OFFSET)}
         >
           <div
-            className="p-4 md:p-6 relative w-fit font-mono shadow-sm flex flex-col gap-1.5"
+            className="relative w-max max-w-none p-[clamp(0.85rem,1.7vw,1.5rem)] font-mono shadow-sm flex flex-col gap-[clamp(0.3rem,0.8vw,0.55rem)]"
             style={{
               transform: 'rotate(-5deg)',
               backgroundColor: 'var(--note-detail-bg)',
@@ -575,11 +671,11 @@ const Hero = ({ shouldAnimate }) => {
           >
             <a href={`mailto:${siteContent.person.email}`} className="flex items-center gap-3 pr-2 group transition-opacity hover:opacity-70">
               <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" strokeWidth="2" fill="none" className="shrink-0"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" /><polyline points="22,6 12,13 2,6" /></svg>
-              <span className="text-sm md:text-base whitespace-nowrap lowercase">{siteContent.person.email}</span>
+              <span className="text-[clamp(0.76rem,1.05vw,1rem)] whitespace-nowrap lowercase">{siteContent.person.email}</span>
             </a>
             <div className="flex items-center gap-3">
               <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" strokeWidth="2" fill="none" className="shrink-0"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" /><circle cx="12" cy="10" r="3" /></svg>
-              <span className="text-sm md:text-base whitespace-nowrap">{siteContent.person.location}</span>
+              <span className="text-[clamp(0.76rem,1.05vw,1rem)] whitespace-nowrap">{siteContent.person.location}</span>
             </div>
           </div>
         </div>
@@ -597,7 +693,7 @@ const AboutAndNews = ({ shouldAnimate }) => {
       <div className="grid grid-cols-1 md:grid-cols-12 gap-16 items-start">
         <div
           className={getFadeInClassName('md:col-span-7 flex flex-col gap-8', shouldAnimate)}
-          style={getFadeInStyle(shouldAnimate, 4.5)}
+          style={getFadeInStyle(shouldAnimate, 4.5 + HOME_REVEAL_DELAY_OFFSET)}
         >
           <h2 className="text-3xl font-serif font-medium underline underline-offset-8 section-heading flex items-center gap-4">
             {siteContent.sections.aboutLabel}
@@ -616,7 +712,7 @@ const AboutAndNews = ({ shouldAnimate }) => {
 
         <div
           className={getFadeInClassName('md:col-span-5 flex flex-col gap-8', shouldAnimate)}
-          style={getFadeInStyle(shouldAnimate, 4.6)}
+          style={getFadeInStyle(shouldAnimate, 4.6 + HOME_REVEAL_DELAY_OFFSET)}
         >
           <h2 className="text-3xl font-serif font-medium underline underline-offset-8 section-heading">
             {siteContent.sections.newsLabel}
@@ -624,7 +720,7 @@ const AboutAndNews = ({ shouldAnimate }) => {
           <div className="flex flex-col gap-8">
             {newsUpdates.map((item, idx) => (
               <div key={idx} className="news-timeline-item flex flex-col gap-1">
-                <span className="text-xs uppercase tracking-widest text-subtle font-bold font-mono">
+                <span className="news-date-label text-xs uppercase tracking-widest text-subtle font-bold font-mono">
                   {item.date}
                 </span>
                 <p className="text-sm leading-snug font-sans">
@@ -710,6 +806,21 @@ const PublicationsView = () => {
   );
 };
 
+// render the cv page
+const CvPage = () => {
+  return (
+    <section className="px-4 md:px-12 py-10 md:py-14 max-w-6xl mx-auto min-h-[calc(100svh-8rem)]">
+      <div className="w-full overflow-hidden rounded-xl border border-[color:var(--border-default)]">
+        <iframe
+          title={siteContent.person.cvTitle}
+          src={siteContent.person.cvHref}
+          className="h-[calc(100svh-12rem)] min-h-[560px] w-full"
+        />
+      </div>
+    </section>
+  );
+};
+
 // render the footer links
 const Footer = () => {
   return (
@@ -725,38 +836,24 @@ const Footer = () => {
   );
 };
 
-// render the cv in a site modal
-const CvModal = ({ isOpen, onClose }) => {
-  if (!isOpen) {
-    return null;
-  }
-
-  return (
-    <div className="cv-overlay fixed inset-0 z-[70] flex items-center justify-center p-4 md:p-8" onClick={onClose}>
-      <div className="cv-panel h-[90vh] w-full max-w-6xl overflow-hidden rounded-2xl" onClick={(event) => event.stopPropagation()}>
-        <div className="flex items-center justify-between border-b border-[color:var(--border-default)] px-4 py-3 md:px-6">
-          <h2 className="text-sm font-mono uppercase tracking-[0.2em] text-subtle">{siteContent.person.cvTitle}</h2>
-          <button type="button" onClick={onClose} className="interactive-link border-0 bg-transparent p-0 text-sm font-mono uppercase tracking-[0.2em]">
-            close
-          </button>
-        </div>
-        <iframe title={siteContent.person.cvTitle} src={siteContent.person.cvHref} className="h-[calc(90vh-57px)] w-full" />
-      </div>
-    </div>
-  );
-};
-
 export default function App() {
   const [loaderPhase, setLoaderPhase] = useState(1);
   const [view, setView] = useState('home');
   const [shouldAnimateHome, setShouldAnimateHome] = useState(false);
-  const [isCvOpen, setIsCvOpen] = useState(false);
+  const [isAtTop, setIsAtTop] = useState(true);
 
   useEffect(() => {
     const hash = window.location.hash;
 
     if (hash === '#publications') {
       setView('publications');
+      setLoaderPhase(0);
+      setShouldAnimateHome(false);
+      return undefined;
+    }
+
+    if (hash === '#cv') {
+      setView('cv');
       setLoaderPhase(0);
       setShouldAnimateHome(false);
       return undefined;
@@ -773,8 +870,8 @@ export default function App() {
 
     const t1 = setTimeout(() => setLoaderPhase(2), formatMilliseconds(1000));
     const t2 = setTimeout(() => setLoaderPhase(3), formatMilliseconds(2550));
-    const t3 = setTimeout(() => setLoaderPhase(4), formatMilliseconds(3950));
-    const t4 = setTimeout(() => setLoaderPhase(0), formatMilliseconds(4750));
+    const t3 = setTimeout(() => setLoaderPhase(4), formatMilliseconds(3950 + POST_FRAME_PAUSE * 1000));
+    const t4 = setTimeout(() => setLoaderPhase(0), formatMilliseconds(4750 + POST_FRAME_PAUSE * 1000));
 
     return () => {
       clearTimeout(t1);
@@ -784,10 +881,20 @@ export default function App() {
     };
   }, []);
 
+  useEffect(() => {
+    const updateTopState = () => {
+      setIsAtTop(window.scrollY <= 8);
+    };
+
+    updateTopState();
+    window.addEventListener('scroll', updateTopState, { passive: true });
+
+    return () => window.removeEventListener('scroll', updateTopState);
+  }, [view, loaderPhase]);
+
   const handleViewChange = (newView) => {
     setLoaderPhase(0);
     setView(newView);
-    setIsCvOpen(false);
     if (newView === 'home') {
       setShouldAnimateHome(false);
     }
@@ -795,23 +902,49 @@ export default function App() {
     window.scrollTo(0, 0);
   };
 
+  const showScrollHint = view === 'home' && loaderPhase === 0 && isAtTop;
+
+  const handleScrollHintClick = () => {
+    const aboutSection = document.getElementById('about');
+
+    if (aboutSection) {
+      aboutSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      return;
+    }
+
+    window.scrollTo({ top: window.innerHeight, behavior: 'smooth' });
+  };
+
   return (
     <div className="site-shell min-h-screen font-sans" style={themeVariables}>
       <style>{customStyles}</style>
       <Loader phase={loaderPhase} />
-      <CvModal isOpen={isCvOpen} onClose={() => setIsCvOpen(false)} />
       <div className="relative z-10">
-        <Navbar onViewChange={handleViewChange} onCvOpen={() => setIsCvOpen(true)} shouldAnimate={shouldAnimateHome} />
+        <Navbar onViewChange={handleViewChange} shouldAnimate={shouldAnimateHome} />
         <main>
           {view === 'home' ? (
             <>
               <Hero shouldAnimate={shouldAnimateHome} />
               <AboutAndNews shouldAnimate={shouldAnimateHome} />
             </>
+          ) : view === 'cv' ? (
+            <CvPage />
           ) : (
             <PublicationsView />
           )}
         </main>
+        {showScrollHint ? (
+          <button
+            type="button"
+            aria-label="scroll down"
+            onClick={handleScrollHintClick}
+            className="scroll-down-hint fixed bottom-6 left-1/2 z-40 -translate-x-1/2 bg-transparent border-0 p-1 cursor-pointer"
+          >
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <path d="M6 9l6 6 6-6" />
+            </svg>
+          </button>
+        ) : null}
         <Footer />
       </div>
     </div>

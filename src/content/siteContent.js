@@ -4,20 +4,20 @@ export const siteContent = {
     theme: {
         // define editable accent and neutral slots here.
         palette: {
-            accent1: '#bef264',
-            accent1Dark: '#7bb722',
-            accent2: '#f9a8d4',
-            accent2Dark: '#f472b6',
-            accent3: '#fde68a',
-            accent3Dark: '#fcd34d',
-            accent4: '#2563eb',
-            accent4Dark: '#1d4ed8',
-            neutral1: '#fafaf9',
-            neutral2: '#fafafa',
+            accent1: '#c6df8b',
+            accent1Dark: '#8ba550',
+            accent2: '#ffa7b0',
+            accent2Dark: '#e44d5c',
+            accent3: '#feab6c',
+            accent3Dark: '#cd732e',
+            accent4: '#66bde0',
+            accent4Dark: '#4093b4',
+            neutral1: '#faf9e9',
+            neutral2: '#faf9e9',
             neutral3: '#f5f5f5',
             neutral4: '#e5e5e5',
             neutral5: '#d1d5db',
-            neutral6: '#a3a3a3',
+            neutral6: '#8b8b8b',
             neutral7: '#737373',
             neutral8: '#525252',
             neutral9: '#262626',
@@ -90,13 +90,11 @@ export const siteContent = {
     hero: {
         // set emphasis: true on any segment you want to emphasize.
         headline: [
-            { text: 'Haruna is a ' },
-            { text: 'computational biologist', emphasis: true, italic: true },
-            { text: ' bridging wet and dry labs to analyze ' },
-            { text: 'cancer-related genome data', emphasis: true },
-            { text: '.' },
+            { text: 'Haruna is an aspiring ' },
+            { text: 'bioinformatics researcher', emphasis: true },
+            { text: ' currently working as a computational associate at the Broad Institute.' },
         ],
-        stickyNote: 'Computational Associate at the Broad Institute of MIT and Harvard.',
+        stickyNote: 'She is analyzing cancer genomes, taking lots of pictures, and trying out new restaurants + cafes.',
     },
     sections: {
         aboutLabel: 'about',
@@ -105,20 +103,21 @@ export const siteContent = {
     about: {
         paragraphs: [
             [
-                { text: 'This website is under construction!!!' }
+                { text: 'I am a computational associate at the Broad Institute and Dana-Farber Cancer Institute in the labs of ' },
+                { text: 'Dr. Rameen Beroukhim', highlight: true, href: 'https://beroukhimlab.org/' },
+                { text: ' and ' },
+                { text: 'Dr. Matthew Meyerson', highlight: true, href: 'https://labs.dana-farber.org/meyersonlab/' },
+                { text: '. My work focuses on developing methods for and analyzing recurrent somatic copy number alterations in cancer. Overall, I hope to develop computational methods and data visualizations that bridge the gap between the bench and big data.' },
             ],
             [
-                { text: 'I am an associate computational biologist analyzing cancer-related genome data. I graduated from ' },
-                { text: 'Caltech', highlight: true, href: 'https://www.caltech.edu' },
-                { text: ' with a BS in Bioengineering and a Minor in Neurobiology, and am currently conducting research at the ' },
-                { text: 'Broad Institute', highlight: true, href: 'https://www.broadinstitute.org' },
-                { text: ' with Drs. Rameen Beroukhim and Matthew Meyerson.' },
+                { text: 'In 2024, I received my B.S. in Bioengineering and Minor in Neurobiology from Caltech, where I worked in ' },
+                { text: 'Dr. Tsui-Fen Chou\'s lab', highlight: true, href: 'https://tfchoulab.caltech.edu/' },
+                { text: ' with Will Rosencrans. Previously, I was a research intern at Calico Life Sciences and Regeneron Pharmaceuticals.' }
             ],
             [
-                { text: 'My work focuses on computational biology methods development, biological data visualization, and multi-omics. With extensive experience in MS-based proteomics, data analysis, and mammalian cell culture, I strive to build stronger wet and dry lab collaborations for data-driven biological research.' },
-            ],
-            [
-                { text: 'Beyond the lab, I explore the intersections of human and non-human connections with the environment through photography and graphic design.' },
+                { text: 'Beyond the lab, I explore the intersections of human and non-human connections with the environment through ' },
+                { text: 'photography', highlight: true, href: 'https://photosbyharuna.mypixieset.com/' },
+                { text: ' and graphic design.' },
             ],
         ],
     },
@@ -126,22 +125,26 @@ export const siteContent = {
         {
             date: 'Jan 2026',
             contentSegments: [
-                { text: 'Excited to share our latest work on sevabertinib, a reversible HER2 inhibitor for non-small cell lung cancer, published in ' },
-                { text: 'Cancer Discovery', href: 'https://doi.org/10.1158/2159-8290.CD-25-0605' },
+                { text: 'Excited to share some of my work with the Meyerson Lab on sevabertinib, a reversible HER2 inhibitor for lung cancer, published in ' },
+                { text: 'Cancer Discovery', italic: true, href: 'https://doi.org/10.1158/2159-8290.CD-25-0605' },
                 { text: '.' },
             ],
         },
         {
+            date: 'Nov 2025',
+            content: [
+                { text: 'My first ever first-author paper on a surfactant-assisted acid precipitation method is published in the ' },
+                { text: 'Journal of Pharmaceutical Sciences', italic: true, href: 'https://doi.org/10.1016/j.xphs.2025.104008' },
+                { text: '!!' }
+            ],
+        },
+        {
             date: 'Aug 2024',
-            content: 'Moved to Cambridge, MA and joined the Broad Institute of MIT and Harvard as a Computational Associate in the Beroukhim and Meyerson Labs.',
+            content: 'I moved to Cambridge, MA and joined the Broad Institute as a Computational Associate in the Beroukhim and Meyerson Labs.',
         },
         {
             date: 'June 2024',
-            content: 'Graduated from Caltech with a B.S. in Bioengineering and a Minor in Neurobiology!',
-        },
-        {
-            date: 'Jan 2024',
-            content: 'New publication in Proteomes detailing laser-capture microdissection LC-MS workflows in aging kidney subpopulations.',
+            content: 'I graduated from Caltech with a B.S. in Bioengineering and a Minor in Neurobiology!',
         },
     ],
     // add more sections here for reviews, preprints, or other categories.
