@@ -7,7 +7,7 @@ const STAR_TUMBLE_DELAY = 0.65;
 const STAR_TUMBLE_DURATION = 0.8;
 const STAR_FIRST_BOUNCE_PROGRESS = 0.6;
 const FIRST_NAME_REVEAL_DELAY = STAR_TUMBLE_DELAY + STAR_TUMBLE_DURATION * STAR_FIRST_BOUNCE_PROGRESS;
-const FIRST_NAME_LETTER_STAGGER = 0.03;
+const FIRST_NAME_LETTER_STAGGER = 0.02;
 const POST_FRAME_PAUSE = 0.25;
 const HOME_REVEAL_DELAY_OFFSET = POST_FRAME_PAUSE;
 
@@ -698,7 +698,7 @@ const AboutAndNews = ({ shouldAnimate }) => {
           <h2 className="text-3xl font-serif font-medium underline underline-offset-8 section-heading flex items-center gap-4">
             {siteContent.sections.aboutLabel}
           </h2>
-          <div className="flex flex-col gap-6 text-muted leading-relaxed text-lg font-sans">
+          <div className="flex flex-col gap-6 text-[color:var(--page-text)] leading-relaxed text-lg font-sans">
             {siteContent.about.paragraphs.map((paragraph, index) => (
               <p key={index}>
                 {renderTextSegments(toSegments(paragraph), {
@@ -761,14 +761,14 @@ const PublicationsView = () => {
                       </span>
                     ) : null}
                     {getPublicationMeta(item) ? (
-                      <span className="text-xs font-mono text-subtle uppercase tracking-widest">{getPublicationMeta(item)}</span>
+                      <span className="text-xs font-mono text-[color:var(--page-text)] uppercase tracking-widest">{getPublicationMeta(item)}</span>
                     ) : null}
                   </div>
                   <h3 className="card-title text-lg md:text-xl font-serif font-medium leading-snug transition-colors">
                     {item.title}
                   </h3>
                   {getEntryCitation(item) ? (
-                    <p className={`text-sm text-muted leading-relaxed ${item.summaryWidth ?? 'max-w-4xl'}`}>
+                    <p className={`text-sm text-[color:var(--page-text)] leading-relaxed ${item.summaryWidth ?? 'max-w-4xl'}`}>
                       {getEntryCitation(item)}
                     </p>
                   ) : null}
