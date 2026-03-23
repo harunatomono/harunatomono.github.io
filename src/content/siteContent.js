@@ -80,7 +80,7 @@ export const siteContent = {
         displayName: 'haruna tomono',
         email: 'htomono@broadinstitute.org',
         location: 'Cambridge, MA',
-        cvHref: '/tomono-haruna_cv.pdf',
+        cvHref: '/tomono-haruna_cv-public.pdf',
         cvTitle: 'haruna tomono cv',
     },
     navigation: {
@@ -219,6 +219,12 @@ export const siteContent = {
                         assignee: 'Regeneron Pharmaceuticals, Inc.',
                         citation: 'U.S. Patent Application 20230279046',
                     },
+                    links: [
+                        {
+                            label: 'patent: US20230279046A1',
+                            href: 'https://patents.google.com/patent/US20230279046A1/en'
+                        }
+                    ]
                 },
             ],
         },
