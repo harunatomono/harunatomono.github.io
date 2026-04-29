@@ -123,6 +123,12 @@ export const siteContent = {
     },
     newsUpdates: [
         {
+            date: 'Apr 2026',
+            contentSegments: [
+                { text: 'I presented my work for The Cancer Genome Atlas\' whole-genome sequencing project at AACR 2026. It was great to learn more about cutting edge cancer research and explore San Diego :)' },
+            ],
+        },
+        {
             date: 'Jan 2026',
             contentSegments: [
                 { text: 'Excited to share some of my work with the Meyerson Lab on sevabertinib, a reversible HER2 inhibitor for lung cancer, published in ' },
