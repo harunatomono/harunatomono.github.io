@@ -12,6 +12,8 @@ export const siteContent = {
             accent3Dark: '#cd732e',
             accent4: '#66bde0',
             accent4Dark: '#4093b4',
+            accent5: '#a166e0',
+            accent5Dark: '#67418f',
             neutral1: '#faf9e9',
             neutral2: '#faf9e9',
             neutral3: '#f5efdc',
@@ -94,7 +96,7 @@ export const siteContent = {
             { text: 'bioinformatics researcher', emphasis: true },
             { text: ' currently working as a computational associate at the Broad Institute.' },
         ],
-        stickyNote: 'She is analyzing cancer genomes, taking lots of pictures, and trying out new restaurants + cafes.',
+        stickyNote: 'She is analyzing cancer genomes, traveling, and heading to UCSF this fall to start her PhD in Biomedical Informatics!',
     },
     sections: {
         aboutLabel: 'about',
@@ -139,7 +141,7 @@ export const siteContent = {
         {
             date: 'Nov 2025',
             content: [
-                { text: 'My first ever first-author paper on a surfactant-assisted acid precipitation method is published in the ' },
+                { text: 'My first ever first-author paper on a surfactant-assisted acid precipitation method was published in the ' },
                 { text: 'Journal of Pharmaceutical Sciences', italic: true, href: 'https://doi.org/10.1016/j.xphs.2025.104008' },
                 { text: '!!' }
             ],
@@ -159,10 +161,34 @@ export const siteContent = {
             title: 'publications',
             items: [
                 {
+                    accent: 'accent5',
+                    label: 'abstract',
+                    title: 'Abstract 1978: Copy number analysis of regulatory regions reveal recurrent \
+                    promoter/enhancer somatic copy number alterations across >8,000 TCGA samples.',
+                    authors: ['Tomono H', 'Bao C', 'Kowalewski A', 'Lehotzky D', 'Solan R', 'Leventhal M', 
+                        'Corchete Sanchez LA', 'Heiman DI','Van Seters S', 'Belkin S', 'Wiseman S', 'Danysh BP', 
+                        'Stewart C', 'Swamy VN', 'Wang G', 'Loinaz X', 'Everton Z', 'Lee GH', 'Lee WC', 'Park H', 
+                        'Kim R', 'Ju YS', 'Rheinbay E', 'Getz G', 'Cherniack AD', 'Meyerson ML', 'Beroukhim R'],
+                    journal: {
+                        name: 'AACR Annual Meeting (Cancer Research)',
+                        meta: '2026',
+                        citation: '2026;86(7 Suppl):Abstract nr 1978'
+                    },
+                    links: [
+                        {
+                            label: 'doi: 10.1158/1538-7445.AM2026-1978',
+                            href: 'https://doi.org/10.1158/1538-7445.AM2026-1978',
+                        }
+                    ]
+                },
+                {
                     accent: 'accent2',
                     label: 'article',
                     title: 'Sevabertinib, a Reversible HER2 Inhibitor with Activity in Lung Cancer.',
-                    authors: ['Siegel F', 'Siegel S', 'Kotýnková K', 'Karsli Uzunbas G', 'Korr D', 'Tomono H', 'Andersen S', 'Denney D', 'Berger M', 'Schulze VK', 'Lewis TA', 'Kaplan B', 'Golfier S', 'Mortier J', 'Hillig RC', 'Boemer U', 'Petersen K', 'Eis K', 'Williams S', 'Rüttinger D', 'Cherniack AD', 'Loong HH', 'Goto K', 'Grassi P', 'Meyerson M', 'Greulich H'],
+                    authors: ['Siegel F', 'Siegel S', 'Kotýnková K', 'Karsli Uzunbas G', 'Korr D', 'Tomono H', 
+                        'Andersen S', 'Denney D', 'Berger M', 'Schulze VK', 'Lewis TA', 'Kaplan B', 'Golfier S', 
+                        'Mortier J', 'Hillig RC', 'Boemer U', 'Petersen K', 'Eis K', 'Williams S', 'Rüttinger D', 
+                        'Cherniack AD', 'Loong HH', 'Goto K', 'Grassi P', 'Meyerson M', 'Greulich H'],
                     journal: {
                         name: 'Cancer Discovery',
                         meta: '2026',
