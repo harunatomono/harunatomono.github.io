@@ -41,7 +41,7 @@ export const siteContent = {
             soft: 'neutral3',
             underline: 'neutral4',
             news: 'neutral5',
-            newsDot: 'neutral11',
+            newsDot: 'neutral9',
         },
         notes: {
             hero: {
@@ -81,7 +81,7 @@ export const siteContent = {
         lastName: 'tomono',
         displayName: 'haruna tomono',
         email: 'htomono@broadinstitute.org',
-        location: 'Cambridge, MA',
+        location: 'San Francisco, CA',
         cvHref: '/tomono-haruna_cv-public.pdf',
         cvTitle: 'haruna tomono cv',
     },
@@ -96,7 +96,7 @@ export const siteContent = {
             { text: 'bioinformatics researcher', emphasis: true },
             { text: ' currently working as a computational associate at the Broad Institute.' },
         ],
-        stickyNote: 'She is analyzing cancer genomes, traveling, and heading to UCSF this fall to start her PhD in Biomedical Informatics!',
+        stickyNote: 'She is analyzing cancer genomes, traveling, and heading to UCSF this fall to start her PhD in Biological and Medical Informatics!',
     },
     sections: {
         aboutLabel: 'about',
@@ -109,7 +109,7 @@ export const siteContent = {
                 { text: 'Dr. Rameen Beroukhim', highlight: true, href: 'https://beroukhimlab.org/' },
                 { text: ' and ' },
                 { text: 'Dr. Matthew Meyerson', highlight: true, href: 'https://labs.dana-farber.org/meyersonlab/' },
-                { text: '. My work focuses on developing methods for and analyzing recurrent somatic copy number alterations in cancer. Overall, I hope to develop computational methods and data visualizations that bridge the gap between the bench and big data.' },
+                { text: '. My work focuses on developing methods for and analyzing recurrent somatic genome rearrangements in cancer. Overall, I hope to develop computational methods and data visualizations that bridge the gap between the bench and big data.' },
             ],
             [
                 { text: 'In 2024, I received my B.S. in Bioengineering and Minor in Neurobiology from Caltech, where I worked in ' },
@@ -119,7 +119,7 @@ export const siteContent = {
             [
                 { text: 'Beyond the lab, I explore the intersections of human and non-human connections with the environment through ' },
                 { text: 'photography', highlight: true, href: 'https://photosbyharuna.mypixieset.com/' },
-                { text: ' and graphic design.' },
+                { text: ', and am training for my first ever half marathon.' },
             ],
         ],
     },
@@ -127,7 +127,7 @@ export const siteContent = {
         {
             date: 'Apr 2026',
             contentSegments: [
-                { text: 'I presented my work for The Cancer Genome Atlas\' whole-genome sequencing project at AACR 2026. It was great to learn more about cutting edge cancer research and explore San Diego :)' },
+                { text: 'I presented my work for The Cancer Genome Atlas\' whole-genome sequencing project at AACR 2026. It was great to see all the recent breakthroughs in cancer biology and explore San Diego :)' },
             ],
         },
         {
@@ -141,21 +141,21 @@ export const siteContent = {
         {
             date: 'Nov 2025',
             content: [
-                { text: 'My first ever first-author paper on a surfactant-assisted acid precipitation method was published in the ' },
+                { text: 'My first ever first-author paper on a surfactant-assisted acid precipitation method, developed during my time at Regeneron, was published in the ' },
                 { text: 'Journal of Pharmaceutical Sciences', italic: true, href: 'https://doi.org/10.1016/j.xphs.2025.104008' },
                 { text: '!!' }
             ],
         },
         {
             date: 'Aug 2024',
-            content: 'I moved to Cambridge, MA and joined the Broad Institute as a Computational Associate in the Beroukhim and Meyerson Labs.',
+            content: 'I moved to Cambridge, MA and joined the Broad Institute as a Computational Associate in the Beroukhim and Meyerson Labs. Looking forward to learning about and working on cutting edge cancer research.',
         },
         {
             date: 'June 2024',
             content: 'I graduated from Caltech with a B.S. in Bioengineering and a Minor in Neurobiology!',
         },
     ],
-    // add more sections here for reviews, preprints, or other categories.
+
     publicationSections: [
         {
             title: 'publications',

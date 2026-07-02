@@ -372,6 +372,23 @@ const customStyles = `
     box-shadow: 0 24px 60px color-mix(in srgb, var(--page-text) 16%, transparent);
   }
 
+  .header-fade::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    height: calc(100% + clamp(1.25rem, 4vh, 2.75rem));
+    background: linear-gradient(
+      to bottom,
+      var(--page-bg) 0%,
+      color-mix(in srgb, var(--page-bg) 92%, transparent) 58%,
+      transparent 100%
+    );
+    pointer-events: none;
+    z-index: -1;
+  }
+
   .scroll-down-hint {
     color: var(--subtle-text);
     transition: opacity ${formatSeconds(0.2)} ease, transform ${formatSeconds(0.2)} ease, color ${formatSeconds(0.2)} ease;
@@ -585,7 +602,7 @@ const Loader = ({ phase }) => {
 const Navbar = ({ onViewChange, shouldAnimate }) => {
   return (
     <nav
-      className={getFadeInClassName('sticky top-0 z-50 flex justify-between items-center py-8 px-6 md:px-12', shouldAnimate)}
+      className={getFadeInClassName('header-fade relative isolate sticky top-0 z-50 flex justify-between items-center py-8 px-6 md:px-12', shouldAnimate)}
       style={getFadeInStyle(shouldAnimate, 4.1 + HOME_REVEAL_DELAY_OFFSET)}
     >
       <div
