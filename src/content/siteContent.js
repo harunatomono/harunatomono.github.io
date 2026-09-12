@@ -80,7 +80,7 @@ export const siteContent = {
         firstName: 'haruna',
         lastName: 'tomono',
         displayName: 'haruna tomono',
-        email: 'htomono@broadinstitute.org',
+        email: 'haruna.tomono@ucsf.edu',
         location: 'San Francisco, CA',
         cvHref: '/tomono-haruna_cv-public.pdf',
         cvTitle: 'haruna tomono cv',
@@ -94,9 +94,9 @@ export const siteContent = {
         headline: [
             { text: 'Haruna is an aspiring ' },
             { text: 'bioinformatics researcher', emphasis: true },
-            { text: ' currently working as a computational associate at the Broad Institute.' },
+            { text: ' and a first-year PhD student in the Biological and Medical Informatics program at UCSF.' },
         ],
-        stickyNote: 'She is analyzing cancer genomes, traveling, and heading to UCSF this fall to start her PhD in Biological and Medical Informatics!',
+        stickyNote: 'She is exploring SF, training for a half-marathon, and learning about cool methods research!',
     },
     sections: {
         aboutLabel: 'about',
@@ -105,16 +105,20 @@ export const siteContent = {
     about: {
         paragraphs: [
             [
-                { text: 'I am a computational associate at the Broad Institute and Dana-Farber Cancer Institute in the labs of ' },
+                { text: 'I am a first-year PhD student at UCSF in the Biological and Medical Informatics (BMI) program. \
+                    My research interests are in 3D genome architecture and regulatory genomics, but am open to exploring methods development in other omics spaces.'}
+            ],
+            [
+                { text: 'Previously, I was a computational associate at the Broad Institute and Dana-Farber Cancer Institute in the labs of ' },
                 { text: 'Dr. Rameen Beroukhim', highlight: true, href: 'https://beroukhimlab.org/' },
                 { text: ' and ' },
                 { text: 'Dr. Matthew Meyerson', highlight: true, href: 'https://labs.dana-farber.org/meyersonlab/' },
-                { text: '. My work focuses on developing methods for and analyzing recurrent somatic genome rearrangements in cancer. Overall, I hope to develop computational methods and data visualizations that bridge the gap between the bench and big data.' },
+                { text: '. My work focused on developing methods for and analyzing recurrent somatic genome rearrangements in cancer.' },
             ],
             [
                 { text: 'In 2024, I received my B.S. in Bioengineering and Minor in Neurobiology from Caltech, where I worked in ' },
                 { text: 'Dr. Tsui-Fen Chou\'s lab', highlight: true, href: 'https://tfchoulab.caltech.edu/' },
-                { text: ' with Will Rosencrans. Previously, I was a research intern at Calico Life Sciences and Regeneron Pharmaceuticals.' }
+                { text: ' with Will Rosencrans. I was also a research intern at Calico Life Sciences and Regeneron Pharmaceuticals.' }
             ],
             [
                 { text: 'Beyond the lab, I explore the intersections of human and non-human connections with the environment through ' },
@@ -124,6 +128,12 @@ export const siteContent = {
         ],
     },
     newsUpdates: [
+        {
+            date: 'Sep 2026',
+            contentSegments: [
+                {text: 'I\'ve made my cross-country move from Boston to San Francisco, and started my first year at UCSF in the BMI program. Thank you to everyone at the Broad and Dana-Farber for an inspiring 2 years.'}
+            ]
+        },
         {
             date: 'Apr 2026',
             contentSegments: [
