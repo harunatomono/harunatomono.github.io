@@ -17,7 +17,7 @@ export const about = {
   // One string per paragraph.
   paragraphs: [
     'I am a first-year PhD student at UCSF in the Biological and Medical Informatics (BMI) program. ' +
-      'My research interests are in 3D genome architecture and regulatory genomics, but am open to exploring methods development in other omics spaces.',
+      'My research interests are in 3D genome architecture and regulatory genomics, but want to explore methods development in other omics spaces.',
 
     'Previously, I was a computational associate at the Broad Institute and Dana-Farber Cancer Institute in the labs of ' +
       '**[Dr. Rameen Beroukhim](https://beroukhimlab.org/)** and **[Dr. Matthew Meyerson](https://labs.dana-farber.org/meyersonlab/)**. ' +
@@ -28,7 +28,7 @@ export const about = {
       'I was also a research intern at Calico Life Sciences and Regeneron Pharmaceuticals.',
 
     'Beyond the lab, I explore the intersections of human and non-human connections with the environment through ' +
-      '**[photography](https://photosbyharuna.mypixieset.com/)**, and am training for my first ever half marathon.',
+      '**[photography](https://photosbyharuna.mypixieset.com/)**.',
   ],
 };
 
@@ -47,12 +47,13 @@ export const news = {
       date: 'Apr 2026',
       text:
         "I presented my work for The Cancer Genome Atlas' whole-genome sequencing project at AACR 2026. " +
-        'It was great to see all the recent breakthroughs in cancer biology and explore San Diego :)',
+        'It was great to see all the recent breakthroughs in cancer biology and explore San Diego :))',
     },
     {
       date: 'Jan 2026',
       text:
-        'Excited to share some of my work with the Meyerson Lab on sevabertinib, a reversible HER2 inhibitor for lung cancer, published in ' +
+        'Excited to share some of my work with the Meyerson Lab on [sevabertinib](https://www.fda.gov/drugs/cancer-approvals/fda-grants-accelerated-approval-sevabertinib-locally-advanced-or-metastatic-non-squamous-non-small), ' +
+        'a reversible HER2 inhibitor for lung cancer, published in ' +
         '*[Cancer Discovery](https://doi.org/10.1158/2159-8290.CD-25-0605)*.',
     },
     {
