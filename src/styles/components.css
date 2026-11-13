@@ -1,0 +1,139 @@
+/* Component styles. Colors come from the CSS variables generated from src/content/theme.js. */
+
+.site-shell {
+  background: var(--page-background);
+  color: var(--page-text);
+}
+
+.site-shell ::selection {
+  background: var(--page-selection-background);
+  color: var(--page-selection-text);
+}
+
+/* --- text helpers --- */
+
+.text-muted { color: var(--text-muted); }
+.text-subtle { color: var(--text-subtle); }
+
+.section-heading { text-decoration-color: var(--border-underline); }
+
+.rich-highlight {
+  color: var(--palette-accent1-dark);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+
+.tag-pill {
+  background: var(--tags-background);
+  color: var(--tags-text);
+}
+
+.interactive-link {
+  transition: color calc(0.2s / var(--animation-speed)) ease, opacity calc(0.2s / var(--animation-speed)) ease;
+}
+.interactive-link:hover { color: var(--links-hover); }
+
+/* --- hero --- */
+
+.folded-note {
+  background: linear-gradient(-45deg, transparent 28px, var(--notes-sticky-background) 0);
+  position: relative;
+}
+.folded-note::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  border-top: 40px solid var(--notes-sticky-fold);
+  border-right: 40px solid transparent;
+}
+
+/* --- navbar --- */
+
+/* Soft fade so content scrolling underneath the sticky navbar disappears gracefully. */
+.header-fade::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: calc(100% + clamp(1.25rem, 4vh, 2.75rem));
+  background: linear-gradient(
+    to bottom,
+    var(--page-background) 0%,
+    color-mix(in srgb, var(--page-background) 92%, transparent) 58%,
+    transparent 100%
+  );
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* --- news timeline --- */
+
+.news-item {
+  position: relative;
+  padding-left: 1.5rem;
+}
+.news-item::after { /* vertical line */
+  content: '';
+  position: absolute;
+  left: -1.5px;
+  top: calc(0.5rem + 4px);
+  bottom: 0;
+  width: 2px;
+  background-color: var(--border-news);
+  z-index: 1;
+  transition: background-color calc(0.2s / var(--animation-speed)) ease;
+}
+.news-item::before { /* dot */
+  content: '';
+  position: absolute;
+  left: -4px;
+  top: 0.5rem;
+  transform: translateY(-50%);
+  width: 7px;
+  height: 7px;
+  background-color: var(--border-news-dot);
+  border-radius: 50%;
+  z-index: 2;
+}
+.news-date { transition: color calc(0.2s / var(--animation-speed)) ease; }
+.news-item:hover::after { background-color: var(--palette-accent1); }
+.news-item:hover .news-date { color: var(--palette-accent1-dark); }
+
+/* --- publication cards --- */
+
+.content-card {
+  border-left: 2px solid var(--border-soft);
+  transition: border-color calc(0.2s / var(--animation-speed)) ease;
+}
+.content-card:hover { border-left-color: var(--card-accent); }
+.content-card:hover .card-title { color: var(--text-muted); }
+
+/* --- footer --- */
+
+.footer-surface {
+  background: var(--footer-background);
+  border-top: 1px solid var(--border-default);
+  color: var(--footer-text);
+}
+
+/* --- scroll hint --- */
+
+.scroll-hint {
+  color: var(--text-subtle);
+  transition:
+    opacity calc(0.2s / var(--animation-speed)) ease,
+    transform calc(0.2s / var(--animation-speed)) ease,
+    color calc(0.2s / var(--animation-speed)) ease;
+  animation: scroll-hint-bob calc(1.2s / var(--animation-speed)) ease-in-out infinite;
+}
+.scroll-hint:hover {
+  color: var(--page-text);
+  opacity: 0.85;
+}
+
+@keyframes scroll-hint-bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(6px); }
+}
